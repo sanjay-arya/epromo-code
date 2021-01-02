@@ -31,8 +31,9 @@ async function generateCode({evoucher, user, phone, itemPrice}){
       return code;
   } catch (error) {
       if(error.code == 'ER_DUP_ENTRY'){
-          console.log(error);
           return generateCode({evoucher, user, phone, itemPrice})
+      }else{
+        console.log(error);
       }
   }
 }
@@ -42,7 +43,7 @@ async function generateQR(code)
     let image = await QRCode.toDataURL(code)
     image = image.replace(/^data:image\/\w+;base64,/, '');
 
-    fs.writeFileSync(`img/${code}.png`, image, {encoding: 'base64'});
+    // fs.writeFileSync(`img/${code}.png`, image, {encoding: 'base64'});
     return {code, image};
 }
 
